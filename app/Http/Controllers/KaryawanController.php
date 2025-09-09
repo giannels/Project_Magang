@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Karyawan;
+use App\Http\Requests\StoreKaryawanRequest;
+use App\Http\Requests\UpdateKaryawanRequest;
 
 class KaryawanController extends Controller
 {
@@ -18,16 +19,9 @@ class KaryawanController extends Controller
         return view('karyawan.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreKaryawanRequest $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'jabatan' => 'required',
-            'email' => 'required|email|unique:karyawans,email',
-            'telepon' => 'required',
-        ]);
-
-        Karyawan::create($request->all());
+        Karyawan::create($request->validated());
         return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil ditambahkan.');
     }
 
@@ -37,24 +31,19 @@ class KaryawanController extends Controller
         return view('karyawan.edit', compact('karyawan'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateKaryawanRequest $request, $id)
     {
-        $request->validate([
-            'nama' => 'required',
-            'jabatan' => 'required',
-            'email' => 'required|email|unique:karyawans,email,'.$id,
-            'telepon' => 'required',
-        ]);
-
         $karyawan = Karyawan::findOrFail($id);
-        $karyawan->update($request->all());
-        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diupdate.');
+        $karyawan->update($request->validated());
+
+        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         $karyawan = Karyawan::findOrFail($id);
         $karyawan->delete();
+
         return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil dihapus.');
     }
 }
