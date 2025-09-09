@@ -8,7 +8,12 @@
         <div style="color: green;">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('karyawan.create') }}">Tambah Karyawan</a>
+    <!-- Tombol Tambah, Export, dan Import -->
+    <div style="margin-bottom: 15px;">
+        <a href="{{ route('karyawan.create') }}" class="btn btn-primary">Tambah Karyawan</a>
+        <a href="{{ route('karyawan.export') }}" class="btn btn-success">Export Excel</a>
+        <a href="{{ route('karyawan.import') }}" class="btn btn-warning">Import Excel</a>
+    </div>
 
     <table border="3" cellpadding="5" cellspacing="0">
         <tr>
