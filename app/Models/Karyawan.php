@@ -16,5 +16,12 @@ class Karyawan extends Model
         'jabatan',
         'email',
         'telepon',
+        'departemen_id', // tambahin ini biar mass-assignment bisa isi departemen
     ];
+
+    // Relasi: Karyawan milik satu departemen
+    public function departemen()
+    {
+        return $this->belongsTo(Departemen::class);
+    }
 }
